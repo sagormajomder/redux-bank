@@ -1,12 +1,21 @@
+import { connect } from 'react-redux';
+
 function formatCurrency(value) {
-  return new Intl.NumberFormat("en", {
-    style: "currency",
-    currency: "USD",
+  return new Intl.NumberFormat('en', {
+    style: 'currency',
+    currency: 'USD',
   }).format(value);
 }
 
-function BalanceDisplay() {
-  return <div className="balance">{formatCurrency(123456)}</div>;
+function BalanceDisplay({ currentBalance }) {
+  return <div className='balance'>{formatCurrency(currentBalance)}</div>;
 }
 
-export default BalanceDisplay;
+function mapStateToProps(state) {
+  return {
+    currentBalance: state.account.balance,
+  };
+}
+
+//connect() return new function and that function take our component as argument and pass the state (which mapped) as props
+export default connect(mapStateToProps)(BalanceDisplay);
